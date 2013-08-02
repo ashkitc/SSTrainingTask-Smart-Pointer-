@@ -39,9 +39,10 @@ template <typename TYPE>
 SHSmartPtr<TYPE>::~SHSmartPtr()
 {	
 	TYPE temporaryStorage;
-	if(storedObject != NULL)
+	if(storedObject)
 	{
-		temporaryStorage = *storedObject;
+		temporaryStorage = *
+			storedObject;
 	}
 	--referenceCounter; //Decrements referenceCount
 	if(referenceCounter == 0) //And if it equals zero
@@ -49,7 +50,7 @@ SHSmartPtr<TYPE>::~SHSmartPtr()
 		cout << "Now reference count in object "<<temporaryStorage<<" is zero. Object'll be destroyed" <<endl;	
 		if(storedObject!= NULL){
 			delete storedObject; //destroy the object
-			
+			referenceCounter = 1;
 		}
 		_getch(); // For checking if all objects deleted
 	}
@@ -67,19 +68,32 @@ SHSmartPtr<TYPE>::SHSmartPtr(const SHSmartPtr &anotherSmartPtr)
 template <typename TYPE>
 SHSmartPtr<TYPE>& SHSmartPtr<TYPE>::operator=(const SHSmartPtr &anotherSmartPtr)
 {
-	if(referenceCounter == 1) // If it's the last referens to some object
+	if(anotherSmartPtr)
 	{
-		SHSmartPtr<TYPE> temporary = *this; //delete this object
-		--temporary.referenceCounter; 
-	} 
-	else //Elese decrement reference counter
-	{
-		--referenceCounter;
+		if(referenceCounter == 1) // If it's the last referens to some object
+		{
+			SHSmartPtr<TYPE> temporary = *this; //delete this object
+			--temporary.referenceCounter; 
+		} 
+		else //Elese decrement reference counter
+		{
+			if(referenceCounter)
+			{
+				--referenceCounter;
+			}
+		}
+		//change the data
+		storedObject = anotherSmartPtr.storedObject;
+		referenceCounter = anotherSmartPtr.referenceCounter;
+		++referenceCounter; //and increment reference counter
 	}
-	//change the data
-	storedObject = anotherSmartPtr.storedObject;
-	referenceCounter = anotherSmartPtr.referenceCounter;
-	++referenceCounter; //and increment reference counter
+	else 
+	{
+		cout << "Object " << *storedObject << "Will be destroyed" << endl;
+		storedObject = NULL;
+		referenceCounter = 0;
+	}
+
 	return *this;
 
 }

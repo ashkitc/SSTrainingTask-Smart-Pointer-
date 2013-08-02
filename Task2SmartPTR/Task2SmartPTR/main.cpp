@@ -20,7 +20,11 @@ int main(int argc, char **argv)
 		show(anohterPtr); //Pass smart pointer into the function by value, for check if temporarty objects deletes corectly
 		SHSmartPtr<string> ptr3(new string("third"));  //creating new smart poiner inside the block
 		ptr3 = anohterPtr; //another test of assignment operator
+		ptr2 = NULL;
+		ptr2 = ptr;
 	}
+
+	
 	_getch();
 	return 0;
 }

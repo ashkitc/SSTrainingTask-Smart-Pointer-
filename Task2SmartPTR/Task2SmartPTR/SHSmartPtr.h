@@ -21,9 +21,8 @@ public:
 	{
 		if(storedObject == NULL)
 		{
-			storedObject = new TYPE;
+			storedObject = new TYPE(objectValue);
 		}
-		*storedObject = objectValue;
 	}
 	//Copy constructors
 	inline SHSmartPtr(const SHSmartPtr &anotherSmartPtr);
@@ -54,7 +53,6 @@ SHSmartPtr<TYPE>::~SHSmartPtr()
 		}
 		_getch(); // For checking if all objects deleted
 	}
-	
 }
 
 template <typename TYPE>
@@ -93,7 +91,5 @@ SHSmartPtr<TYPE>& SHSmartPtr<TYPE>::operator=(const SHSmartPtr &anotherSmartPtr)
 		storedObject = NULL;
 		referenceCounter = 0;
 	}
-
 	return *this;
-
 }

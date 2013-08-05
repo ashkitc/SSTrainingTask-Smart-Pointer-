@@ -16,10 +16,11 @@ int main(int argc, char **argv)
 	{
 		SHSmartPtr<string> anohterPtr = ptr; //Creating smart pointer inside the block (using copy constructor)
 		cout << *anohterPtr << endl;
-		anohterPtr = ptr2; //Try assignment operator
+		anohterPtr = ptr; //Try assignment operator
 		show(anohterPtr); //Pass smart pointer into the function by value, for check if temporarty objects deletes corectly
 		SHSmartPtr<string> ptr3(new string("third"));  //creating new smart poiner inside the block
 		ptr3 = anohterPtr; //another test of assignment operator
+ 	 	ptr3 = NULL;
 	}
 
 	

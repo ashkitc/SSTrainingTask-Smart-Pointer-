@@ -6,7 +6,7 @@ class SHSmartPtr
 public:
 	SHSmartPtr() // default constructor
 	{
-		storedObject = new TYPE(0);
+		storedObject = new TYPE;
 		referenceCounter = new int(1);
 	}
 		explicit SHSmartPtr(TYPE *pointerToStore) //Constructor for wrap something in smart poiter

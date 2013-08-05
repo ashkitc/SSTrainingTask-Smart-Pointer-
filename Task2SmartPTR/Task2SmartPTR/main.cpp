@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <conio.h>
 #include "SHSmartPtr.h"
@@ -10,7 +11,6 @@ int main(int argc, char **argv)
 	SHSmartPtr<string> ptr(new string("first")); 
 	cout << *ptr << endl;
 	SHSmartPtr<string> ptr2(new string("second"));
-	
 	// some block for checking if temporary objects deletes corectly
 	if (true)
 	{
@@ -19,12 +19,12 @@ int main(int argc, char **argv)
 		anohterPtr = ptr; //Try assignment operator
 		show(anohterPtr); //Pass smart pointer into the function by value, for check if temporarty objects deletes corectly
 		SHSmartPtr<string> ptr3(new string("third"));  //creating new smart poiner inside the block
-		ptr3 = anohterPtr; //another test of assignment operator
- 	 	ptr3 = NULL;
+		ptr3 = ptr2; //another test of assignment operator
+		ptr3= SHSmartPtr<string>(NULL);
 	}
 
-	
-	_getch();
+	SHSmartPtr<int> myInt;
+	SHSmartPtr<int> myInt2(myInt);
 	return 0;
 }
 void show(SHSmartPtr<string> obj)

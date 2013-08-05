@@ -27,7 +27,6 @@ int main(int argc, char **argv)
 
 	SHSmartPtr<int> myInt;
 	SHSmartPtr<int> myInt2(myInt);
-	_getch();
 	return 0;
 }
 void show(SHSmartPtr<string> obj)

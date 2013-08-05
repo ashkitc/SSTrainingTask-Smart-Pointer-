@@ -49,7 +49,6 @@ void SHSmartPtr<TYPE>::finalize()
 				delete storedObject; //destroy the object
 			}
 			delete referenceCounter;
-			_getch();
 		}
 }
 

@@ -22,6 +22,7 @@ public:
 	operator bool()const { return storedObject != NULL; }
 	//Assignment operator
 	SHSmartPtr<TYPE>& operator= (const SHSmartPtr<TYPE>& anotherSmartPtr);
+	void reset();
 private:
 	TYPE *storedObject; //Pointer to object wrapped in smart pointer
     int *referenceCounter; // increments in copy constructor and assignment operator, decrements in destructor
@@ -48,7 +49,23 @@ void SHSmartPtr<TYPE>::finalize()
 				delete storedObject; //destroy the object
 			}
 			delete referenceCounter;
+			_getch();
 		}
+}
+
+template <typename TYPE>
+void SHSmartPtr<TYPE>::reset()
+{
+	if(*referenceCounter == 1)
+	{ 
+		finalize();
+	}
+	else 
+	{
+	    --( *referenceCounter ); //decrement reference count
+	}
+	referenceCounter = new int(0);
+	storedObject = NULL;
 }
 template <typename TYPE>
 SHSmartPtr<TYPE>::SHSmartPtr(const SHSmartPtr &anotherSmartPtr)
@@ -68,16 +85,9 @@ SHSmartPtr<TYPE>& SHSmartPtr<TYPE>::operator=(const SHSmartPtr &anotherSmartPtr)
 		storedObject = anotherSmartPtr.storedObject; //Copy data from another object
 	    referenceCounter = anotherSmartPtr.referenceCounter; 
 		++ ( *referenceCounter ); //Copy constructor must increment reference counter
-	} else 	
+	} else 
 	{ 
-		if(*referenceCounter == 1)
-		{
-			finalize();
-		} else
-		{
-			storedObject = NULL;  //nullify stored object
-			--( *referenceCounter ); //decrement reference count
-		}
+		reset();
 	}
 		return *this;
 }

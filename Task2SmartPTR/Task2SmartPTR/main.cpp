@@ -20,11 +20,14 @@ int main(int argc, char **argv)
 		show(anohterPtr); //Pass smart pointer into the function by value, for check if temporarty objects deletes corectly
 		SHSmartPtr<string> ptr3(new string("third"));  //creating new smart poiner inside the block
 		ptr3 = ptr2; //another test of assignment operator
-		ptr3= SHSmartPtr<string>(NULL);
+		ptr3.reset();
+		ptr3 = ptr2;
+		cout << *ptr3;
 	}
 
 	SHSmartPtr<int> myInt;
 	SHSmartPtr<int> myInt2(myInt);
+	_getch();
 	return 0;
 }
 void show(SHSmartPtr<string> obj)
